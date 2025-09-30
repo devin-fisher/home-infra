@@ -1,3 +1,14 @@
+- name: Show host group info
+  hosts: jellyfin
+  connection: local
+  gather_facts: yes
+  tasks:
+    - debug:
+        msg:
+          hostname: "{{ inventory_hostname }}"
+          groups: "{{ group_names }}"
+          all_vars: "{{ hostvars[inventory_hostname] }}"
+
 - name: Update apt cache
   ansible.builtin.apt:
     update_cache: yes
