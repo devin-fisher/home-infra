@@ -1,0 +1,15 @@
+- name: Ensure OpenSSH server is installed
+  ansible.builtin.apt:
+    name: openssh-server
+    state: present
+    update_cache: yes
+
+- name: Apply SSH hardening settings
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "^{{ item.key }} "
+    line: "{{ item.key }} {{ item.value }}"
+    state: present
+    backup: yes
+  loop: "{{ ssh_config | dict2items }}"
+  notify: Restart ssh

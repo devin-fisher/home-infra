@@ -1,0 +1,6 @@
+all:
+  hosts:
+    jellyfin:
+      ansible_host: jellyfin.local
+      ansible_user: deverin
+      ansible_become: true

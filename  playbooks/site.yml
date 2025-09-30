@@ -1,0 +1,7 @@
+- name: Apply baseline config to all hosts
+  hosts: all
+  become: true
+  roles:
+    - common
+    - users
+    - ssh
