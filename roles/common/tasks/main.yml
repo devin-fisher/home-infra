@@ -6,3 +6,15 @@
 - name: Upgrade all packages
   ansible.builtin.apt:
     upgrade: dist
+
+- name: Set system hostname
+  ansible.builtin.hostname:
+    name: "{{ hostname }}"
+  become: yes
+
+- name: Ensure hostname resolves in /etc/hosts
+  ansible.builtin.lineinfile:
+    path: /etc/hosts
+    regexp: '127\.0\.1\.1'
+    line: "127.0.1.1 {{ hostname }}"
+  become: yes
