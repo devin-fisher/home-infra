@@ -1,0 +1,8 @@
+- name: The Jellyfin Media Servers
+  hosts: jellyfin
+  connection: local
+  become: yes
+  roles:
+    - common
+    - users
+    - ssh

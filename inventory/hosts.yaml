@@ -3,10 +3,10 @@ all:
     jellyfin:
       ansible_connection: local
       ansible_become: true
-      users:
-        - name: deverin
-          groups: sudo
-          pubkey: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPlfdVUKnIs/C/HwKQPlehnMTY5wujB4M7U4vIT/O7lN devin@Mackie.local"
-      ssh_config:
-        PermitRootLogin: "no"
-        PasswordAuthentication: "no"
+      # users:
+      #   - name: deverin
+      #     groups: sudo
+      #     pubkey: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPlfdVUKnIs/C/HwKQPlehnMTY5wujB4M7U4vIT/O7lN devin@Mackie.local"
+      # ssh_config:
+      #   PermitRootLogin: "no"
+      #   PasswordAuthentication: "no"
