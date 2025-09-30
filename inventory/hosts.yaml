@@ -6,7 +6,7 @@ all:
       users:
         - name: deverin
           groups: sudo
-          pubkey: "ssh-ed25519 AAAAC3Nz... devin@Mackie.local"
+          pubkey: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPlfdVUKnIs/C/HwKQPlehnMTY5wujB4M7U4vIT/O7lN devin@Mackie.local"
       ssh_config:
         PermitRootLogin: "no"
         PasswordAuthentication: "no"
