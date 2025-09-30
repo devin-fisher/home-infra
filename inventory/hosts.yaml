@@ -3,3 +3,10 @@ all:
     jellyfin:
       ansible_connection: local
       ansible_become: true
+      users:
+        - name: deverin
+          groups: sudo
+          pubkey: "ssh-ed25519 AAAAC3Nz... devin@Mackie.local"
+      ssh_config:
+        PermitRootLogin: "no"
+        PasswordAuthentication: "no"
