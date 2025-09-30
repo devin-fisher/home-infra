@@ -3,7 +3,7 @@
     name: openssh-server
     state: present
 
-- name: Ensure nginx is running and enabled
+- name: Ensure ssh is running and enabled
   ansible.builtin.service:
     name: ssh
     state: started
