@@ -1,0 +1,3 @@
+ssh_config:
+  PermitRootLogin: "no"
+  PasswordAuthentication: "no"
