@@ -18,3 +18,16 @@
     regexp: '127\.0\.1\.1'
     line: "127.0.1.1 {{ hostname }}"
   become: yes
+
+- name: Ensure required packages are installed
+  ansible.builtin.apt:
+    name:
+      - avahi-daemon
+      - libnss-mdns
+    state: present
+
+- name: Ensure avahi-daemon is running and enabled
+  ansible.builtin.service:
+    name: avahi-daemon
+    state: started
+    enabled: true
