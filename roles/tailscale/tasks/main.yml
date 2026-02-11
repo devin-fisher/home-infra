@@ -1,0 +1,59 @@
+---
+- name: Ensure apt dependencies are present
+  apt:
+    name: gnupg, apt-transport-https, ca-certificates, curl
+    state: present
+    update_cache: yes
+
+- name: Add Tailscale GPG key
+  ansible.builtin.apt_key:
+    url: https://pkgs.tailscale.com/stable/ubuntu/{{ ansible_distribution_release }}.gpg
+    state: present
+
+- name: Add Tailscale repository
+  ansible.builtin.apt_repository:
+    repo: "deb https://pkgs.tailscale.com/stable/ubuntu {{ ansible_distribution_release }} main"
+    state: present
+    filename: tailscale
+
+- name: Update apt cache
+  ansible.builtin.apt:
+    update_cache: yes
+
+- name: Install Tailscale
+  ansible.builtin.apt:
+    name: tailscale
+    state: present
+
+- name: Ensure tailscaled service is enabled and started
+  ansible.builtin.systemd:
+    name: tailscaled
+    state: started
+    enabled: yes
+
+- name: Check Tailscale login status
+  ansible.builtin.shell: tailscale status
+  register: tailscale_status_check
+  changed_when: false
+  ignore_errors: yes
+
+- name: Prompt for Tailscale auth key if not logged in
+  ansible.builtin.pause:
+    prompt: "Enter your Tailscale Auth Key"
+    echo: no
+  register: tailscale_key_input
+  when: tailscale_status_check.rc != 0   # rc != 0 means logged out
+
+- name: Bring host up on Tailscale (single run if logged out)
+  ansible.builtin.shell: |
+    tailscale up --authkey {{ tailscale_key_input.user_input }} --hostname {{ inventory_hostname }}
+  register: tailscale_up
+  args:
+    executable: /bin/bash
+  when: tailscale_status_check.rc != 0   # rc != 0 means logged out
+
+- name: Show final Tailscale status
+  ansible.builtin.shell: tailscale status
+  register: tailscale_status
+  changed_when: false
+  ignore_errors: yes
